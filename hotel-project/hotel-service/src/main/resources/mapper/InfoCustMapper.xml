@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.InfoCustMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.InfoCust" >
+    <id column="cust_no" property="custNo" jdbcType="BIGINT" />
+    <result column="cust_name" property="custName" jdbcType="CHAR" />
+    <result column="id_type" property="idType" jdbcType="INTEGER" />
+    <result column="id_code" property="idCode" jdbcType="CHAR" />
+    <result column="end_date" property="endDate" jdbcType="DATE" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="addr" property="addr" jdbcType="CHAR" />
+    <result column="nation" property="nation" jdbcType="CHAR" />
+    <result column="native_place" property="nativePlace" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cust_no, cust_name, id_type, id_code, end_date, birthday, sex, addr, nation, native_place
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.InfoCustExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from info_cust
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from info_cust
+    where cust_no = #{custNo,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCustByIdTypeIdCode" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from info_cust
+    where idType = #{idType,jdbcType=INT}
+    and idCode = #{idCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from info_cust
+    where cust_no = #{custNo,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.InfoCustExample" >
+    delete from info_cust
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.InfoCust" >
+    insert into info_cust (cust_no, cust_name, id_type, 
+      id_code, end_date, birthday, sex, 
+      addr, nation, native_place)
+    values (#{custNo,jdbcType=BIGINT}, #{custName,jdbcType=CHAR}, #{idType,jdbcType=INTEGER}, 
+      #{idCode,jdbcType=CHAR}, #{endDate,jdbcType=DATE}, #{birthday,jdbcType=DATE}, #{sex,jdbcType=CHAR}, 
+      #{addr,jdbcType=CHAR}, #{nation,jdbcType=CHAR}, #{nativePlace,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.InfoCust" >
+    insert into info_cust
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="custNo != null" >
+        cust_no,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="idType != null" >
+        id_type,
+      </if>
+      <if test="idCode != null" >
+        id_code,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="nation != null" >
+        nation,
+      </if>
+      <if test="nativePlace != null" >
+        native_place,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="custNo != null" >
+        #{custNo,jdbcType=BIGINT},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=CHAR},
+      </if>
+      <if test="idType != null" >
+        #{idType,jdbcType=INTEGER},
+      </if>
+      <if test="idCode != null" >
+        #{idCode,jdbcType=CHAR},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=CHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=CHAR},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.InfoCustExample" resultType="java.lang.Integer" >
+    select count(*) from info_cust
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update info_cust
+    <set >
+      <if test="record.custNo != null" >
+        cust_no = #{record.custNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.custName != null" >
+        cust_name = #{record.custName,jdbcType=CHAR},
+      </if>
+      <if test="record.idType != null" >
+        id_type = #{record.idType,jdbcType=INTEGER},
+      </if>
+      <if test="record.idCode != null" >
+        id_code = #{record.idCode,jdbcType=CHAR},
+      </if>
+      <if test="record.endDate != null" >
+        end_date = #{record.endDate,jdbcType=DATE},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=CHAR},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=CHAR},
+      </if>
+      <if test="record.nation != null" >
+        nation = #{record.nation,jdbcType=CHAR},
+      </if>
+      <if test="record.nativePlace != null" >
+        native_place = #{record.nativePlace,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update info_cust
+    set cust_no = #{record.custNo,jdbcType=BIGINT},
+      cust_name = #{record.custName,jdbcType=CHAR},
+      id_type = #{record.idType,jdbcType=INTEGER},
+      id_code = #{record.idCode,jdbcType=CHAR},
+      end_date = #{record.endDate,jdbcType=DATE},
+      birthday = #{record.birthday,jdbcType=DATE},
+      sex = #{record.sex,jdbcType=CHAR},
+      addr = #{record.addr,jdbcType=CHAR},
+      nation = #{record.nation,jdbcType=CHAR},
+      native_place = #{record.nativePlace,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.InfoCust" >
+    update info_cust
+    <set >
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=CHAR},
+      </if>
+      <if test="idType != null" >
+        id_type = #{idType,jdbcType=INTEGER},
+      </if>
+      <if test="idCode != null" >
+        id_code = #{idCode,jdbcType=CHAR},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=CHAR},
+      </if>
+      <if test="nation != null" >
+        nation = #{nation,jdbcType=CHAR},
+      </if>
+      <if test="nativePlace != null" >
+        native_place = #{nativePlace,jdbcType=CHAR},
+      </if>
+    </set>
+    where cust_no = #{custNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.InfoCust" >
+    update info_cust
+    set cust_name = #{custName,jdbcType=CHAR},
+      id_type = #{idType,jdbcType=INTEGER},
+      id_code = #{idCode,jdbcType=CHAR},
+      end_date = #{endDate,jdbcType=DATE},
+      birthday = #{birthday,jdbcType=DATE},
+      sex = #{sex,jdbcType=CHAR},
+      addr = #{addr,jdbcType=CHAR},
+      nation = #{nation,jdbcType=CHAR},
+      native_place = #{nativePlace,jdbcType=CHAR}
+    where cust_no = #{custNo,jdbcType=BIGINT}
+  </update>
+</mapper>

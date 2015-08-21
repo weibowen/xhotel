@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.CodeRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.CodeRoom" >
+    <id column="room_code" property="roomCode" jdbcType="CHAR" />
+    <result column="room_type" property="roomType" jdbcType="CHAR" />
+    <result column="floor" property="floor" jdbcType="CHAR" />
+    <result column="facing" property="facing" jdbcType="CHAR" />
+    <result column="size" property="size" jdbcType="CHAR" />
+    <result column="num" property="num" jdbcType="CHAR" />
+    <result column="phone" property="phone" jdbcType="CHAR" />
+    <result column="else_describe" property="elseDescribe" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    room_code, room_type, floor, facing, size, num, phone, else_describe
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.CodeRoomExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from code_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_room
+    where room_code = #{roomCode,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from code_room
+    where room_code = #{roomCode,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.CodeRoomExample" >
+    delete from code_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.CodeRoom" >
+    insert into code_room (room_code, room_type, floor, 
+      facing, size, num, phone, 
+      else_describe)
+    values (#{roomCode,jdbcType=CHAR}, #{roomType,jdbcType=CHAR}, #{floor,jdbcType=CHAR}, 
+      #{facing,jdbcType=CHAR}, #{size,jdbcType=CHAR}, #{num,jdbcType=CHAR}, #{phone,jdbcType=CHAR}, 
+      #{elseDescribe,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.CodeRoom" >
+    insert into code_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="roomType != null" >
+        room_type,
+      </if>
+      <if test="floor != null" >
+        floor,
+      </if>
+      <if test="facing != null" >
+        facing,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="elseDescribe != null" >
+        else_describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="roomType != null" >
+        #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="floor != null" >
+        #{floor,jdbcType=CHAR},
+      </if>
+      <if test="facing != null" >
+        #{facing,jdbcType=CHAR},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=CHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="elseDescribe != null" >
+        #{elseDescribe,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.CodeRoomExample" resultType="java.lang.Integer" >
+    select count(*) from code_room
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update code_room
+    <set >
+      <if test="record.roomCode != null" >
+        room_code = #{record.roomCode,jdbcType=CHAR},
+      </if>
+      <if test="record.roomType != null" >
+        room_type = #{record.roomType,jdbcType=CHAR},
+      </if>
+      <if test="record.floor != null" >
+        floor = #{record.floor,jdbcType=CHAR},
+      </if>
+      <if test="record.facing != null" >
+        facing = #{record.facing,jdbcType=CHAR},
+      </if>
+      <if test="record.size != null" >
+        size = #{record.size,jdbcType=CHAR},
+      </if>
+      <if test="record.num != null" >
+        num = #{record.num,jdbcType=CHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=CHAR},
+      </if>
+      <if test="record.elseDescribe != null" >
+        else_describe = #{record.elseDescribe,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update code_room
+    set room_code = #{record.roomCode,jdbcType=CHAR},
+      room_type = #{record.roomType,jdbcType=CHAR},
+      floor = #{record.floor,jdbcType=CHAR},
+      facing = #{record.facing,jdbcType=CHAR},
+      size = #{record.size,jdbcType=CHAR},
+      num = #{record.num,jdbcType=CHAR},
+      phone = #{record.phone,jdbcType=CHAR},
+      else_describe = #{record.elseDescribe,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.CodeRoom" >
+    update code_room
+    <set >
+      <if test="roomType != null" >
+        room_type = #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="floor != null" >
+        floor = #{floor,jdbcType=CHAR},
+      </if>
+      <if test="facing != null" >
+        facing = #{facing,jdbcType=CHAR},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=CHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=CHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="elseDescribe != null" >
+        else_describe = #{elseDescribe,jdbcType=CHAR},
+      </if>
+    </set>
+    where room_code = #{roomCode,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.CodeRoom" >
+    update code_room
+    set room_type = #{roomType,jdbcType=CHAR},
+      floor = #{floor,jdbcType=CHAR},
+      facing = #{facing,jdbcType=CHAR},
+      size = #{size,jdbcType=CHAR},
+      num = #{num,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR},
+      else_describe = #{elseDescribe,jdbcType=CHAR}
+    where room_code = #{roomCode,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.LogInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.LogInfo" >
+    <id column="log_no" property="logNo" jdbcType="BIGINT" />
+    <result column="action_code" property="actionCode" jdbcType="CHAR" />
+    <result column="room_type" property="roomType" jdbcType="CHAR" />
+    <result column="room_code" property="roomCode" jdbcType="CHAR" />
+    <result column="cust_no" property="custNo" jdbcType="BIGINT" />
+    <result column="cust_name" property="custName" jdbcType="CHAR" />
+    <result column="pay_no" property="payNo" jdbcType="BIGINT" />
+    <result column="update_desc" property="updateDesc" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIME" />
+    <result column="oper_no" property="operNo" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    log_no, action_code, room_type, room_code, cust_no, cust_name, pay_no, update_desc, 
+    update_time, oper_no
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.LogInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from log_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from log_info
+    where log_no = #{logNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from log_info
+    where log_no = #{logNo,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.LogInfoExample" >
+    delete from log_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.LogInfo" >
+    insert into log_info (log_no, action_code, room_type, 
+      room_code, cust_no, cust_name, 
+      pay_no, update_desc, update_time, 
+      oper_no)
+    values (#{logNo,jdbcType=BIGINT}, #{actionCode,jdbcType=CHAR}, #{roomType,jdbcType=CHAR}, 
+      #{roomCode,jdbcType=CHAR}, #{custNo,jdbcType=BIGINT}, #{custName,jdbcType=CHAR}, 
+      #{payNo,jdbcType=BIGINT}, #{updateDesc,jdbcType=CHAR}, #{updateTime,jdbcType=TIME}, 
+      #{operNo,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.LogInfo" >
+    insert into log_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logNo != null" >
+        log_no,
+      </if>
+      <if test="actionCode != null" >
+        action_code,
+      </if>
+      <if test="roomType != null" >
+        room_type,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="custNo != null" >
+        cust_no,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="payNo != null" >
+        pay_no,
+      </if>
+      <if test="updateDesc != null" >
+        update_desc,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="operNo != null" >
+        oper_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logNo != null" >
+        #{logNo,jdbcType=BIGINT},
+      </if>
+      <if test="actionCode != null" >
+        #{actionCode,jdbcType=CHAR},
+      </if>
+      <if test="roomType != null" >
+        #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="custNo != null" >
+        #{custNo,jdbcType=BIGINT},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=CHAR},
+      </if>
+      <if test="payNo != null" >
+        #{payNo,jdbcType=BIGINT},
+      </if>
+      <if test="updateDesc != null" >
+        #{updateDesc,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIME},
+      </if>
+      <if test="operNo != null" >
+        #{operNo,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.LogInfoExample" resultType="java.lang.Integer" >
+    select count(*) from log_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update log_info
+    <set >
+      <if test="record.logNo != null" >
+        log_no = #{record.logNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.actionCode != null" >
+        action_code = #{record.actionCode,jdbcType=CHAR},
+      </if>
+      <if test="record.roomType != null" >
+        room_type = #{record.roomType,jdbcType=CHAR},
+      </if>
+      <if test="record.roomCode != null" >
+        room_code = #{record.roomCode,jdbcType=CHAR},
+      </if>
+      <if test="record.custNo != null" >
+        cust_no = #{record.custNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.custName != null" >
+        cust_name = #{record.custName,jdbcType=CHAR},
+      </if>
+      <if test="record.payNo != null" >
+        pay_no = #{record.payNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateDesc != null" >
+        update_desc = #{record.updateDesc,jdbcType=CHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIME},
+      </if>
+      <if test="record.operNo != null" >
+        oper_no = #{record.operNo,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update log_info
+    set log_no = #{record.logNo,jdbcType=BIGINT},
+      action_code = #{record.actionCode,jdbcType=CHAR},
+      room_type = #{record.roomType,jdbcType=CHAR},
+      room_code = #{record.roomCode,jdbcType=CHAR},
+      cust_no = #{record.custNo,jdbcType=BIGINT},
+      cust_name = #{record.custName,jdbcType=CHAR},
+      pay_no = #{record.payNo,jdbcType=BIGINT},
+      update_desc = #{record.updateDesc,jdbcType=CHAR},
+      update_time = #{record.updateTime,jdbcType=TIME},
+      oper_no = #{record.operNo,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.LogInfo" >
+    update log_info
+    <set >
+      <if test="actionCode != null" >
+        action_code = #{actionCode,jdbcType=CHAR},
+      </if>
+      <if test="roomType != null" >
+        room_type = #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="custNo != null" >
+        cust_no = #{custNo,jdbcType=BIGINT},
+      </if>
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=CHAR},
+      </if>
+      <if test="payNo != null" >
+        pay_no = #{payNo,jdbcType=BIGINT},
+      </if>
+      <if test="updateDesc != null" >
+        update_desc = #{updateDesc,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIME},
+      </if>
+      <if test="operNo != null" >
+        oper_no = #{operNo,jdbcType=CHAR},
+      </if>
+    </set>
+    where log_no = #{logNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.LogInfo" >
+    update log_info
+    set action_code = #{actionCode,jdbcType=CHAR},
+      room_type = #{roomType,jdbcType=CHAR},
+      room_code = #{roomCode,jdbcType=CHAR},
+      cust_no = #{custNo,jdbcType=BIGINT},
+      cust_name = #{custName,jdbcType=CHAR},
+      pay_no = #{payNo,jdbcType=BIGINT},
+      update_desc = #{updateDesc,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIME},
+      oper_no = #{operNo,jdbcType=CHAR}
+    where log_no = #{logNo,jdbcType=BIGINT}
+  </update>
+</mapper>

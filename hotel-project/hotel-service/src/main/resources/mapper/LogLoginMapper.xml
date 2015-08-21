@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.LogLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.LogLogin" >
+    <id column="log_id" property="logId" jdbcType="BIGINT" />
+    <result column="staff_id" property="staffId" jdbcType="BIGINT" />
+    <result column="login_time" property="loginTime" jdbcType="TIME" />
+    <result column="logout_time" property="logoutTime" jdbcType="TIME" />
+    <result column="from_ip" property="fromIp" jdbcType="CHAR" />
+    <result column="login_result" property="loginResult" jdbcType="CHAR" />
+    <result column="comments" property="comments" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    log_id, staff_id, login_time, logout_time, from_ip, login_result, comments
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.LogLoginExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from log_login
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from log_login
+    where log_id = #{logId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from log_login
+    where log_id = #{logId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.LogLoginExample" >
+    delete from log_login
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.LogLogin" >
+    insert into log_login (log_id, staff_id, login_time, 
+      logout_time, from_ip, login_result, 
+      comments)
+    values (#{logId,jdbcType=BIGINT}, #{staffId,jdbcType=BIGINT}, #{loginTime,jdbcType=TIME}, 
+      #{logoutTime,jdbcType=TIME}, #{fromIp,jdbcType=CHAR}, #{loginResult,jdbcType=CHAR}, 
+      #{comments,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.LogLogin" >
+    insert into log_login
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        log_id,
+      </if>
+      <if test="staffId != null" >
+        staff_id,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="logoutTime != null" >
+        logout_time,
+      </if>
+      <if test="fromIp != null" >
+        from_ip,
+      </if>
+      <if test="loginResult != null" >
+        login_result,
+      </if>
+      <if test="comments != null" >
+        comments,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=BIGINT},
+      </if>
+      <if test="staffId != null" >
+        #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIME},
+      </if>
+      <if test="logoutTime != null" >
+        #{logoutTime,jdbcType=TIME},
+      </if>
+      <if test="fromIp != null" >
+        #{fromIp,jdbcType=CHAR},
+      </if>
+      <if test="loginResult != null" >
+        #{loginResult,jdbcType=CHAR},
+      </if>
+      <if test="comments != null" >
+        #{comments,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.LogLoginExample" resultType="java.lang.Integer" >
+    select count(*) from log_login
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update log_login
+    <set >
+      <if test="record.logId != null" >
+        log_id = #{record.logId,jdbcType=BIGINT},
+      </if>
+      <if test="record.staffId != null" >
+        staff_id = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.loginTime != null" >
+        login_time = #{record.loginTime,jdbcType=TIME},
+      </if>
+      <if test="record.logoutTime != null" >
+        logout_time = #{record.logoutTime,jdbcType=TIME},
+      </if>
+      <if test="record.fromIp != null" >
+        from_ip = #{record.fromIp,jdbcType=CHAR},
+      </if>
+      <if test="record.loginResult != null" >
+        login_result = #{record.loginResult,jdbcType=CHAR},
+      </if>
+      <if test="record.comments != null" >
+        comments = #{record.comments,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update log_login
+    set log_id = #{record.logId,jdbcType=BIGINT},
+      staff_id = #{record.staffId,jdbcType=BIGINT},
+      login_time = #{record.loginTime,jdbcType=TIME},
+      logout_time = #{record.logoutTime,jdbcType=TIME},
+      from_ip = #{record.fromIp,jdbcType=CHAR},
+      login_result = #{record.loginResult,jdbcType=CHAR},
+      comments = #{record.comments,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.LogLogin" >
+    update log_login
+    <set >
+      <if test="staffId != null" >
+        staff_id = #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="loginTime != null" >
+        login_time = #{loginTime,jdbcType=TIME},
+      </if>
+      <if test="logoutTime != null" >
+        logout_time = #{logoutTime,jdbcType=TIME},
+      </if>
+      <if test="fromIp != null" >
+        from_ip = #{fromIp,jdbcType=CHAR},
+      </if>
+      <if test="loginResult != null" >
+        login_result = #{loginResult,jdbcType=CHAR},
+      </if>
+      <if test="comments != null" >
+        comments = #{comments,jdbcType=CHAR},
+      </if>
+    </set>
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.LogLogin" >
+    update log_login
+    set staff_id = #{staffId,jdbcType=BIGINT},
+      login_time = #{loginTime,jdbcType=TIME},
+      logout_time = #{logoutTime,jdbcType=TIME},
+      from_ip = #{fromIp,jdbcType=CHAR},
+      login_result = #{loginResult,jdbcType=CHAR},
+      comments = #{comments,jdbcType=CHAR}
+    where log_id = #{logId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- Log4j最主要的三大基本构件： -->
+	<!-- 1．Appenders（定义了log信息输出的设备，log信息应该被输出到什么地方，控制台、文件（数据库）、网络设备等） -->
+	<!-- 2．Layouts（对log信息进行格式化） -->
+	<!-- 3．Categories（对log信息进行分类筛选，通俗的讲就是什么信息应该被输出，什么log信息应该被忽略） -->
+	<!-- 控制台 -->
+	<!-- System.err -->
+	<appender name="CONSOLE.ERR" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.err" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %l - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="warn" />
+			<param name="LevelMax" value="fatal" />
+			<param name="AcceptOnMatch" value="false" />
+		</filter>
+	</appender>
+	<!-- System.out -->
+	<!-- The default pattern: Date Priority [Category] Message\n -->
+	<!-- %p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL -->
+	<!-- %r 输出自应用启动到输出该log信息耗费的毫秒数 -->
+	<!-- %c 输出所属的类目，通常就是所在类的全名 -->
+	<!-- %t 输出产生该日志事件的线程名 -->
+	<!-- %n 输出一个回车换行符，Windows平台为“rn”，Unix平台为“n” -->
+	<!-- %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss,SSS}，输出类似：2002年10月18日 
+		22：10：28，921 -->
+	<!-- %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) -->
+	<appender name="CONSOLE.OUT" class="org.apache.log4j.ConsoleAppender">
+		<param name="target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %l - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="debug" />
+			<param name="LevelMax" value="info" />
+			<param name="AcceptOnMatch" value="false" />
+		</filter>
+	</appender>
+	<!-- 错误级别日志文件设置 这个错误日志只记录error级别以上的信息，大小自定义，超过则或者再生成一份或者追加覆盖，不备份 -->
+	<!-- RollingFileAppender继承了FileAppender -->
+	<appender name="errorRollingFileAppender" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="logs/error.log" />
+		<param name="Append" value="true" />
+		<param name="Threshold" value="ERROR" />
+		<param name="MaxFileSize" value="1000KB" />
+		<param name="MaxBackupIndex" value="1" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %l - %m%n" />
+		</layout>
+	</appender>
+	<!-- '.'yyyy-MM: 每月 -->
+	<!-- '.'yyyy-ww: 每周 -->
+	<!-- '.'yyyy-MM-dd: 每天 -->
+	<!-- '.'yyyy-MM-dd-a: 每天两次 -->
+	<!-- '.'yyyy-MM-dd-HH: 每小时 -->
+	<!-- '.'yyyy-MM-dd-HH-mm: 每分钟 -->
+	<appender name="dailyRollingFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="logs/normal.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %-5p %l - %m%n" />
+		</layout>
+	</appender>
+	<!-- 对指定的包设定日志级别，主要目的是减少不必要的日志 -->
+	<!-- <logger name="com.ibatis" additivity="true"> <level value="ERROR" /> 
+		</logger> <logger name="java.sql.Connection" additivity="true"> <level value="ERROR" 
+		/> </logger> <logger name="java.sql.Statement" additivity="true"> <level 
+		value="ERROR" /> </logger> <logger name="java.sql.PreparedStatement" additivity="true"> 
+		<level value="ERROR" /> </logger> -->
+	<!-- 使用Appender -->
+	<!-- <category name="useAppender"> 使用备份机制 <appender-ref ref="dailyRollingFileAppender" 
+		/> 同时也写error.log <appender-ref ref="errorRollingFileAppender" /> </category> -->
+	<root>
+		<!-- TRACE < DEBUG < INFO < WARN < ERROR < FATAL -->
+		<priority value="debug" />
+		<!-- 在生产环境下，可以把下行输出到控制台的代码注释掉 -->
+		<appender-ref ref="CONSOLE.ERR" />
+		<appender-ref ref="CONSOLE.OUT" />
+		<!-- 使用备份机制 -->
+		<appender-ref ref="dailyRollingFileAppender" />
+		<!-- 同时也写error.log -->
+		<appender-ref ref="errorRollingFileAppender" />
+	</root>
+
+</log4j:configuration>

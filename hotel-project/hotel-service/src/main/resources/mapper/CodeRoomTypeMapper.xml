@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.CodeRoomTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.CodeRoomType" >
+    <id column="channel" property="channel" jdbcType="CHAR" />
+    <id column="room_type" property="roomType" jdbcType="CHAR" />
+    <result column="room_type_name" property="roomTypeName" jdbcType="CHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="off" property="off" jdbcType="REAL" />
+    <result column="discount_price" property="discountPrice" jdbcType="REAL" />
+    <result column="room_count" property="roomCount" jdbcType="INTEGER" />
+    <result column="over_count" property="overCount" jdbcType="INTEGER" />
+    <result column="by_day" property="byDay" jdbcType="CHAR" />
+    <result column="per_day_fee" property="perDayFee" jdbcType="REAL" />
+    <result column="by_scale" property="byScale" jdbcType="CHAR" />
+    <result column="per_scale_num" property="perScaleNum" jdbcType="REAL" />
+    <result column="reserve_room_count" property="reserveRoomCount" jdbcType="INTEGER" />
+    <result column="weekend" property="weekend" jdbcType="CHAR" />
+    <result column="weekend_price" property="weekendPrice" jdbcType="REAL" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    channel, room_type, room_type_name, price, off, discount_price, room_count, over_count, 
+    by_day, per_day_fee, by_scale, per_scale_num, reserve_room_count, weekend, weekend_price, 
+    order_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.CodeRoomTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from code_room_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hotel.po.CodeRoomTypeKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_room_type
+    where channel = #{channel,jdbcType=CHAR}
+      and room_type = #{roomType,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.hotel.po.CodeRoomTypeKey" >
+    delete from code_room_type
+    where channel = #{channel,jdbcType=CHAR}
+      and room_type = #{roomType,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.CodeRoomTypeExample" >
+    delete from code_room_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.CodeRoomType" >
+    insert into code_room_type (channel, room_type, room_type_name, 
+      price, off, discount_price, room_count, 
+      over_count, by_day, per_day_fee, 
+      by_scale, per_scale_num, reserve_room_count, 
+      weekend, weekend_price, order_num
+      )
+    values (#{channel,jdbcType=CHAR}, #{roomType,jdbcType=CHAR}, #{roomTypeName,jdbcType=CHAR}, 
+      #{price,jdbcType=REAL}, #{off,jdbcType=REAL}, #{discountPrice,jdbcType=REAL}, #{roomCount,jdbcType=INTEGER}, 
+      #{overCount,jdbcType=INTEGER}, #{byDay,jdbcType=CHAR}, #{perDayFee,jdbcType=REAL}, 
+      #{byScale,jdbcType=CHAR}, #{perScaleNum,jdbcType=REAL}, #{reserveRoomCount,jdbcType=INTEGER}, 
+      #{weekend,jdbcType=CHAR}, #{weekendPrice,jdbcType=REAL}, #{orderNum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.CodeRoomType" >
+    insert into code_room_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="roomType != null" >
+        room_type,
+      </if>
+      <if test="roomTypeName != null" >
+        room_type_name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="off != null" >
+        off,
+      </if>
+      <if test="discountPrice != null" >
+        discount_price,
+      </if>
+      <if test="roomCount != null" >
+        room_count,
+      </if>
+      <if test="overCount != null" >
+        over_count,
+      </if>
+      <if test="byDay != null" >
+        by_day,
+      </if>
+      <if test="perDayFee != null" >
+        per_day_fee,
+      </if>
+      <if test="byScale != null" >
+        by_scale,
+      </if>
+      <if test="perScaleNum != null" >
+        per_scale_num,
+      </if>
+      <if test="reserveRoomCount != null" >
+        reserve_room_count,
+      </if>
+      <if test="weekend != null" >
+        weekend,
+      </if>
+      <if test="weekendPrice != null" >
+        weekend_price,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="channel != null" >
+        #{channel,jdbcType=CHAR},
+      </if>
+      <if test="roomType != null" >
+        #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomTypeName != null" >
+        #{roomTypeName,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="off != null" >
+        #{off,jdbcType=REAL},
+      </if>
+      <if test="discountPrice != null" >
+        #{discountPrice,jdbcType=REAL},
+      </if>
+      <if test="roomCount != null" >
+        #{roomCount,jdbcType=INTEGER},
+      </if>
+      <if test="overCount != null" >
+        #{overCount,jdbcType=INTEGER},
+      </if>
+      <if test="byDay != null" >
+        #{byDay,jdbcType=CHAR},
+      </if>
+      <if test="perDayFee != null" >
+        #{perDayFee,jdbcType=REAL},
+      </if>
+      <if test="byScale != null" >
+        #{byScale,jdbcType=CHAR},
+      </if>
+      <if test="perScaleNum != null" >
+        #{perScaleNum,jdbcType=REAL},
+      </if>
+      <if test="reserveRoomCount != null" >
+        #{reserveRoomCount,jdbcType=INTEGER},
+      </if>
+      <if test="weekend != null" >
+        #{weekend,jdbcType=CHAR},
+      </if>
+      <if test="weekendPrice != null" >
+        #{weekendPrice,jdbcType=REAL},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.CodeRoomTypeExample" resultType="java.lang.Integer" >
+    select count(*) from code_room_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update code_room_type
+    <set >
+      <if test="record.channel != null" >
+        channel = #{record.channel,jdbcType=CHAR},
+      </if>
+      <if test="record.roomType != null" >
+        room_type = #{record.roomType,jdbcType=CHAR},
+      </if>
+      <if test="record.roomTypeName != null" >
+        room_type_name = #{record.roomTypeName,jdbcType=CHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.off != null" >
+        off = #{record.off,jdbcType=REAL},
+      </if>
+      <if test="record.discountPrice != null" >
+        discount_price = #{record.discountPrice,jdbcType=REAL},
+      </if>
+      <if test="record.roomCount != null" >
+        room_count = #{record.roomCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.overCount != null" >
+        over_count = #{record.overCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.byDay != null" >
+        by_day = #{record.byDay,jdbcType=CHAR},
+      </if>
+      <if test="record.perDayFee != null" >
+        per_day_fee = #{record.perDayFee,jdbcType=REAL},
+      </if>
+      <if test="record.byScale != null" >
+        by_scale = #{record.byScale,jdbcType=CHAR},
+      </if>
+      <if test="record.perScaleNum != null" >
+        per_scale_num = #{record.perScaleNum,jdbcType=REAL},
+      </if>
+      <if test="record.reserveRoomCount != null" >
+        reserve_room_count = #{record.reserveRoomCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.weekend != null" >
+        weekend = #{record.weekend,jdbcType=CHAR},
+      </if>
+      <if test="record.weekendPrice != null" >
+        weekend_price = #{record.weekendPrice,jdbcType=REAL},
+      </if>
+      <if test="record.orderNum != null" >
+        order_num = #{record.orderNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update code_room_type
+    set channel = #{record.channel,jdbcType=CHAR},
+      room_type = #{record.roomType,jdbcType=CHAR},
+      room_type_name = #{record.roomTypeName,jdbcType=CHAR},
+      price = #{record.price,jdbcType=REAL},
+      off = #{record.off,jdbcType=REAL},
+      discount_price = #{record.discountPrice,jdbcType=REAL},
+      room_count = #{record.roomCount,jdbcType=INTEGER},
+      over_count = #{record.overCount,jdbcType=INTEGER},
+      by_day = #{record.byDay,jdbcType=CHAR},
+      per_day_fee = #{record.perDayFee,jdbcType=REAL},
+      by_scale = #{record.byScale,jdbcType=CHAR},
+      per_scale_num = #{record.perScaleNum,jdbcType=REAL},
+      reserve_room_count = #{record.reserveRoomCount,jdbcType=INTEGER},
+      weekend = #{record.weekend,jdbcType=CHAR},
+      weekend_price = #{record.weekendPrice,jdbcType=REAL},
+      order_num = #{record.orderNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.CodeRoomType" >
+    update code_room_type
+    <set >
+      <if test="roomTypeName != null" >
+        room_type_name = #{roomTypeName,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="off != null" >
+        off = #{off,jdbcType=REAL},
+      </if>
+      <if test="discountPrice != null" >
+        discount_price = #{discountPrice,jdbcType=REAL},
+      </if>
+      <if test="roomCount != null" >
+        room_count = #{roomCount,jdbcType=INTEGER},
+      </if>
+      <if test="overCount != null" >
+        over_count = #{overCount,jdbcType=INTEGER},
+      </if>
+      <if test="byDay != null" >
+        by_day = #{byDay,jdbcType=CHAR},
+      </if>
+      <if test="perDayFee != null" >
+        per_day_fee = #{perDayFee,jdbcType=REAL},
+      </if>
+      <if test="byScale != null" >
+        by_scale = #{byScale,jdbcType=CHAR},
+      </if>
+      <if test="perScaleNum != null" >
+        per_scale_num = #{perScaleNum,jdbcType=REAL},
+      </if>
+      <if test="reserveRoomCount != null" >
+        reserve_room_count = #{reserveRoomCount,jdbcType=INTEGER},
+      </if>
+      <if test="weekend != null" >
+        weekend = #{weekend,jdbcType=CHAR},
+      </if>
+      <if test="weekendPrice != null" >
+        weekend_price = #{weekendPrice,jdbcType=REAL},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where channel = #{channel,jdbcType=CHAR}
+      and room_type = #{roomType,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.CodeRoomType" >
+    update code_room_type
+    set room_type_name = #{roomTypeName,jdbcType=CHAR},
+      price = #{price,jdbcType=REAL},
+      off = #{off,jdbcType=REAL},
+      discount_price = #{discountPrice,jdbcType=REAL},
+      room_count = #{roomCount,jdbcType=INTEGER},
+      over_count = #{overCount,jdbcType=INTEGER},
+      by_day = #{byDay,jdbcType=CHAR},
+      per_day_fee = #{perDayFee,jdbcType=REAL},
+      by_scale = #{byScale,jdbcType=CHAR},
+      per_scale_num = #{perScaleNum,jdbcType=REAL},
+      reserve_room_count = #{reserveRoomCount,jdbcType=INTEGER},
+      weekend = #{weekend,jdbcType=CHAR},
+      weekend_price = #{weekendPrice,jdbcType=REAL},
+      order_num = #{orderNum,jdbcType=INTEGER}
+    where channel = #{channel,jdbcType=CHAR}
+      and room_type = #{roomType,jdbcType=CHAR}
+  </update>
+</mapper>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.CodeListMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.CodeList" >
+    <id column="code_value" property="codeValue" jdbcType="CHAR" />
+    <id column="type_code" property="typeCode" jdbcType="CHAR" />
+    <result column="code_name" property="codeName" jdbcType="CHAR" />
+    <result column="parent_code_value" property="parentCodeValue" jdbcType="CHAR" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    code_value, type_code, code_name, parent_code_value, order_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.CodeListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from code_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.hotel.po.CodeListKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_list
+    where code_value = #{codeValue,jdbcType=CHAR}
+      and type_code = #{typeCode,jdbcType=CHAR}
+  </select>
+  <select id="selectByTypeCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_list
+    where type_code = #{typeCode,jdbcType=CHAR}
+    order by order_num
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.hotel.po.CodeListKey" >
+    delete from code_list
+    where code_value = #{codeValue,jdbcType=CHAR}
+      and type_code = #{typeCode,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.CodeListExample" >
+    delete from code_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.CodeList" >
+    insert into code_list (code_value, type_code, code_name, 
+      parent_code_value, order_num)
+    values (#{codeValue,jdbcType=CHAR}, #{typeCode,jdbcType=CHAR}, #{codeName,jdbcType=CHAR}, 
+      #{parentCodeValue,jdbcType=CHAR}, #{orderNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.CodeList" >
+    insert into code_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codeValue != null" >
+        code_value,
+      </if>
+      <if test="typeCode != null" >
+        type_code,
+      </if>
+      <if test="codeName != null" >
+        code_name,
+      </if>
+      <if test="parentCodeValue != null" >
+        parent_code_value,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codeValue != null" >
+        #{codeValue,jdbcType=CHAR},
+      </if>
+      <if test="typeCode != null" >
+        #{typeCode,jdbcType=CHAR},
+      </if>
+      <if test="codeName != null" >
+        #{codeName,jdbcType=CHAR},
+      </if>
+      <if test="parentCodeValue != null" >
+        #{parentCodeValue,jdbcType=CHAR},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.CodeListExample" resultType="java.lang.Integer" >
+    select count(*) from code_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update code_list
+    <set >
+      <if test="record.codeValue != null" >
+        code_value = #{record.codeValue,jdbcType=CHAR},
+      </if>
+      <if test="record.typeCode != null" >
+        type_code = #{record.typeCode,jdbcType=CHAR},
+      </if>
+      <if test="record.codeName != null" >
+        code_name = #{record.codeName,jdbcType=CHAR},
+      </if>
+      <if test="record.parentCodeValue != null" >
+        parent_code_value = #{record.parentCodeValue,jdbcType=CHAR},
+      </if>
+      <if test="record.orderNum != null" >
+        order_num = #{record.orderNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update code_list
+    set code_value = #{record.codeValue,jdbcType=CHAR},
+      type_code = #{record.typeCode,jdbcType=CHAR},
+      code_name = #{record.codeName,jdbcType=CHAR},
+      parent_code_value = #{record.parentCodeValue,jdbcType=CHAR},
+      order_num = #{record.orderNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.CodeList" >
+    update code_list
+    <set >
+      <if test="codeName != null" >
+        code_name = #{codeName,jdbcType=CHAR},
+      </if>
+      <if test="parentCodeValue != null" >
+        parent_code_value = #{parentCodeValue,jdbcType=CHAR},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where code_value = #{codeValue,jdbcType=CHAR}
+      and type_code = #{typeCode,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.CodeList" >
+    update code_list
+    set code_name = #{codeName,jdbcType=CHAR},
+      parent_code_value = #{parentCodeValue,jdbcType=CHAR},
+      order_num = #{orderNum,jdbcType=INTEGER}
+    where code_value = #{codeValue,jdbcType=CHAR}
+      and type_code = #{typeCode,jdbcType=CHAR}
+  </update>
+</mapper>

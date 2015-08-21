@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.InfoStaffBillMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.InfoStaffBill" >
+    <result column="staff_id" property="staffId" jdbcType="BIGINT" />
+    <result column="bill_item" property="billItem" jdbcType="CHAR" />
+    <result column="goods_status" property="goodsStatus" jdbcType="CHAR" />
+    <result column="pay_fee" property="payFee" jdbcType="REAL" />
+    <result column="update_time" property="updateTime" jdbcType="TIME" />
+    <result column="oper_no" property="operNo" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    staff_id, bill_item, goods_status, pay_fee, update_time, oper_no
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.InfoStaffBillExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from info_staff_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.hotel.po.InfoStaffBillExample" >
+    delete from info_staff_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.InfoStaffBill" >
+    insert into info_staff_bill (staff_id, bill_item, goods_status, 
+      pay_fee, update_time, oper_no)
+    values (#{staffId,jdbcType=BIGINT}, #{billItem,jdbcType=CHAR}, #{goodsStatus,jdbcType=CHAR}, 
+      #{payFee,jdbcType=REAL}, #{updateTime,jdbcType=TIME}, #{operNo,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.InfoStaffBill" >
+    insert into info_staff_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staffId != null" >
+        staff_id,
+      </if>
+      <if test="billItem != null" >
+        bill_item,
+      </if>
+      <if test="goodsStatus != null" >
+        goods_status,
+      </if>
+      <if test="payFee != null" >
+        pay_fee,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="operNo != null" >
+        oper_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staffId != null" >
+        #{staffId,jdbcType=BIGINT},
+      </if>
+      <if test="billItem != null" >
+        #{billItem,jdbcType=CHAR},
+      </if>
+      <if test="goodsStatus != null" >
+        #{goodsStatus,jdbcType=CHAR},
+      </if>
+      <if test="payFee != null" >
+        #{payFee,jdbcType=REAL},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIME},
+      </if>
+      <if test="operNo != null" >
+        #{operNo,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.InfoStaffBillExample" resultType="java.lang.Integer" >
+    select count(*) from info_staff_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update info_staff_bill
+    <set >
+      <if test="record.staffId != null" >
+        staff_id = #{record.staffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.billItem != null" >
+        bill_item = #{record.billItem,jdbcType=CHAR},
+      </if>
+      <if test="record.goodsStatus != null" >
+        goods_status = #{record.goodsStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.payFee != null" >
+        pay_fee = #{record.payFee,jdbcType=REAL},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIME},
+      </if>
+      <if test="record.operNo != null" >
+        oper_no = #{record.operNo,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update info_staff_bill
+    set staff_id = #{record.staffId,jdbcType=BIGINT},
+      bill_item = #{record.billItem,jdbcType=CHAR},
+      goods_status = #{record.goodsStatus,jdbcType=CHAR},
+      pay_fee = #{record.payFee,jdbcType=REAL},
+      update_time = #{record.updateTime,jdbcType=TIME},
+      oper_no = #{record.operNo,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

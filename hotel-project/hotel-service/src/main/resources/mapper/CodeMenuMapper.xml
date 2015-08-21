@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.CodeMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.CodeMenu" >
+    <id column="menu_code" property="menuCode" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="menu_name" property="menuName" jdbcType="CHAR" />
+    <result column="parent_menu_code" property="parentMenuCode" jdbcType="BIGINT" />
+    <result column="URL" property="url" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    menu_code, level, menu_name, parent_menu_code, URL, status, order_num
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.CodeMenuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from code_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_menu
+    where menu_code = #{menuCode,jdbcType=BIGINT}
+  </select>
+  <select id="selectLevel" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from code_menu
+    where menu_code = in 
+    (select menu_code 
+     from code_menu group by level having count(level) > 1)
+     and status = 1
+  </select>
+  <select id="selectByLevel" resultMap="BaseResultMap"  parameterType="java.lang.Long">
+    select 
+    <include refid="Base_Column_List" />
+    from code_menu
+    where level = #{level,jdbcType=BIGINT}
+    and status = 1
+    order by order_num
+  </select>
+  <select id="selectMenuByStaffIdParentMenuCode" resultMap="BaseResultMap" >
+    SELECT
+	c.`level` AS `level`,
+	c.menu_code AS menu_code,
+	c.menu_name AS menu_name,
+	c.order_num AS order_num,
+	c.parent_menu_code AS parent_menu_code,
+	c.URL AS URL
+	FROM
+		rule_staff_role a,
+		rule_role_menu b,
+		code_menu c
+	WHERE
+		a.role_code = b.role_code
+	AND b.menu_code = c.menu_code
+	AND b.`status` = '1'
+	AND c.`status` = '1'
+	AND a.staff_id = #{staffId,jdbcType=BIGINT}
+	AND c.parent_menu_code = #{parentMenuCode,jdbcType=BIGINT}
+	order by c.order_num
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from code_menu
+    where menu_code = #{menuCode,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.CodeMenuExample" >
+    delete from code_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.CodeMenu" >
+    insert into code_menu (menu_code, level, menu_name, 
+      parent_menu_code, URL, status, 
+      order_num)
+    values (#{menuCode,jdbcType=BIGINT}, #{level,jdbcType=INTEGER}, #{menuName,jdbcType=CHAR}, 
+      #{parentMenuCode,jdbcType=BIGINT}, #{url,jdbcType=CHAR}, #{status,jdbcType=CHAR}, 
+      #{orderNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.CodeMenu" >
+    insert into code_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuCode != null" >
+        menu_code,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="menuName != null" >
+        menu_name,
+      </if>
+      <if test="parentMenuCode != null" >
+        parent_menu_code,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuCode != null" >
+        #{menuCode,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=CHAR},
+      </if>
+      <if test="parentMenuCode != null" >
+        #{parentMenuCode,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.CodeMenuExample" resultType="java.lang.Integer" >
+    select count(*) from code_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update code_menu
+    <set >
+      <if test="record.menuCode != null" >
+        menu_code = #{record.menuCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuName != null" >
+        menu_name = #{record.menuName,jdbcType=CHAR},
+      </if>
+      <if test="record.parentMenuCode != null" >
+        parent_menu_code = #{record.parentMenuCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.url != null" >
+        URL = #{record.url,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.orderNum != null" >
+        order_num = #{record.orderNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update code_menu
+    set menu_code = #{record.menuCode,jdbcType=BIGINT},
+      level = #{record.level,jdbcType=INTEGER},
+      menu_name = #{record.menuName,jdbcType=CHAR},
+      parent_menu_code = #{record.parentMenuCode,jdbcType=BIGINT},
+      URL = #{record.url,jdbcType=CHAR},
+      status = #{record.status,jdbcType=CHAR},
+      order_num = #{record.orderNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.CodeMenu" >
+    update code_menu
+    <set >
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="menuName != null" >
+        menu_name = #{menuName,jdbcType=CHAR},
+      </if>
+      <if test="parentMenuCode != null" >
+        parent_menu_code = #{parentMenuCode,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where menu_code = #{menuCode,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.CodeMenu" >
+    update code_menu
+    set level = #{level,jdbcType=INTEGER},
+      menu_name = #{menuName,jdbcType=CHAR},
+      parent_menu_code = #{parentMenuCode,jdbcType=BIGINT},
+      URL = #{url,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR},
+      order_num = #{orderNum,jdbcType=INTEGER}
+    where menu_code = #{menuCode,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.InfoPayMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.InfoPay" >
+    <id column="fee_no" property="feeNo" jdbcType="BIGINT" />
+    <result column="pay_no" property="payNo" jdbcType="BIGINT" />
+    <result column="cust_no" property="custNo" jdbcType="BIGINT" />
+    <result column="room_code" property="roomCode" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="pay_mode" property="payMode" jdbcType="CHAR" />
+    <result column="pay_fee" property="payFee" jdbcType="REAL" />
+    <result column="pay_time" property="payTime" jdbcType="TIME" />
+    <result column="oper_no" property="operNo" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fee_no, pay_no, cust_no, room_code, status, pay_mode, pay_fee, pay_time, oper_no
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.InfoPayExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from info_pay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from info_pay
+    where fee_no = #{feeNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from info_pay
+    where fee_no = #{feeNo,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.InfoPayExample" >
+    delete from info_pay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.InfoPay" >
+    insert into info_pay (fee_no, pay_no, cust_no, 
+      room_code, status, pay_mode, pay_fee, 
+      pay_time, oper_no)
+    values (#{feeNo,jdbcType=BIGINT}, #{payNo,jdbcType=BIGINT}, #{custNo,jdbcType=BIGINT}, 
+      #{roomCode,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{payMode,jdbcType=CHAR}, #{payFee,jdbcType=REAL}, 
+      #{payTime,jdbcType=TIME}, #{operNo,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.InfoPay" >
+    insert into info_pay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feeNo != null" >
+        fee_no,
+      </if>
+      <if test="payNo != null" >
+        pay_no,
+      </if>
+      <if test="custNo != null" >
+        cust_no,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="payMode != null" >
+        pay_mode,
+      </if>
+      <if test="payFee != null" >
+        pay_fee,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="operNo != null" >
+        oper_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feeNo != null" >
+        #{feeNo,jdbcType=BIGINT},
+      </if>
+      <if test="payNo != null" >
+        #{payNo,jdbcType=BIGINT},
+      </if>
+      <if test="custNo != null" >
+        #{custNo,jdbcType=BIGINT},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="payMode != null" >
+        #{payMode,jdbcType=CHAR},
+      </if>
+      <if test="payFee != null" >
+        #{payFee,jdbcType=REAL},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIME},
+      </if>
+      <if test="operNo != null" >
+        #{operNo,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.InfoPayExample" resultType="java.lang.Integer" >
+    select count(*) from info_pay
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update info_pay
+    <set >
+      <if test="record.feeNo != null" >
+        fee_no = #{record.feeNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.payNo != null" >
+        pay_no = #{record.payNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.custNo != null" >
+        cust_no = #{record.custNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomCode != null" >
+        room_code = #{record.roomCode,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.payMode != null" >
+        pay_mode = #{record.payMode,jdbcType=CHAR},
+      </if>
+      <if test="record.payFee != null" >
+        pay_fee = #{record.payFee,jdbcType=REAL},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=TIME},
+      </if>
+      <if test="record.operNo != null" >
+        oper_no = #{record.operNo,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update info_pay
+    set fee_no = #{record.feeNo,jdbcType=BIGINT},
+      pay_no = #{record.payNo,jdbcType=BIGINT},
+      cust_no = #{record.custNo,jdbcType=BIGINT},
+      room_code = #{record.roomCode,jdbcType=CHAR},
+      status = #{record.status,jdbcType=CHAR},
+      pay_mode = #{record.payMode,jdbcType=CHAR},
+      pay_fee = #{record.payFee,jdbcType=REAL},
+      pay_time = #{record.payTime,jdbcType=TIME},
+      oper_no = #{record.operNo,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.InfoPay" >
+    update info_pay
+    <set >
+      <if test="payNo != null" >
+        pay_no = #{payNo,jdbcType=BIGINT},
+      </if>
+      <if test="custNo != null" >
+        cust_no = #{custNo,jdbcType=BIGINT},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="payMode != null" >
+        pay_mode = #{payMode,jdbcType=CHAR},
+      </if>
+      <if test="payFee != null" >
+        pay_fee = #{payFee,jdbcType=REAL},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIME},
+      </if>
+      <if test="operNo != null" >
+        oper_no = #{operNo,jdbcType=CHAR},
+      </if>
+    </set>
+    where fee_no = #{feeNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.InfoPay" >
+    update info_pay
+    set pay_no = #{payNo,jdbcType=BIGINT},
+      cust_no = #{custNo,jdbcType=BIGINT},
+      room_code = #{roomCode,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR},
+      pay_mode = #{payMode,jdbcType=CHAR},
+      pay_fee = #{payFee,jdbcType=REAL},
+      pay_time = #{payTime,jdbcType=TIME},
+      oper_no = #{operNo,jdbcType=CHAR}
+    where fee_no = #{feeNo,jdbcType=BIGINT}
+  </update>
+</mapper>

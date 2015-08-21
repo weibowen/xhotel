@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.CodeParamMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.CodeParam" >
+    <id column="PARAM_CODE" property="paramCode" jdbcType="CHAR" />
+    <result column="PARAM_VALUE" property="paramValue" jdbcType="CHAR" />
+    <result column="PARAM_NAME" property="paramName" jdbcType="CHAR" />
+    <result column="STATE" property="state" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PARAM_CODE, PARAM_VALUE, PARAM_NAME, STATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.CodeParamExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from code_param
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_param
+    where PARAM_CODE = #{paramCode,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from code_param
+    where PARAM_CODE = #{paramCode,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.CodeParamExample" >
+    delete from code_param
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.CodeParam" >
+    insert into code_param (PARAM_CODE, PARAM_VALUE, PARAM_NAME, 
+      STATE)
+    values (#{paramCode,jdbcType=CHAR}, #{paramValue,jdbcType=CHAR}, #{paramName,jdbcType=CHAR}, 
+      #{state,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.CodeParam" >
+    insert into code_param
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paramCode != null" >
+        PARAM_CODE,
+      </if>
+      <if test="paramValue != null" >
+        PARAM_VALUE,
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paramCode != null" >
+        #{paramCode,jdbcType=CHAR},
+      </if>
+      <if test="paramValue != null" >
+        #{paramValue,jdbcType=CHAR},
+      </if>
+      <if test="paramName != null" >
+        #{paramName,jdbcType=CHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.CodeParamExample" resultType="java.lang.Integer" >
+    select count(*) from code_param
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update code_param
+    <set >
+      <if test="record.paramCode != null" >
+        PARAM_CODE = #{record.paramCode,jdbcType=CHAR},
+      </if>
+      <if test="record.paramValue != null" >
+        PARAM_VALUE = #{record.paramValue,jdbcType=CHAR},
+      </if>
+      <if test="record.paramName != null" >
+        PARAM_NAME = #{record.paramName,jdbcType=CHAR},
+      </if>
+      <if test="record.state != null" >
+        STATE = #{record.state,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update code_param
+    set PARAM_CODE = #{record.paramCode,jdbcType=CHAR},
+      PARAM_VALUE = #{record.paramValue,jdbcType=CHAR},
+      PARAM_NAME = #{record.paramName,jdbcType=CHAR},
+      STATE = #{record.state,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.CodeParam" >
+    update code_param
+    <set >
+      <if test="paramValue != null" >
+        PARAM_VALUE = #{paramValue,jdbcType=CHAR},
+      </if>
+      <if test="paramName != null" >
+        PARAM_NAME = #{paramName,jdbcType=CHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=CHAR},
+      </if>
+    </set>
+    where PARAM_CODE = #{paramCode,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.CodeParam" >
+    update code_param
+    set PARAM_VALUE = #{paramValue,jdbcType=CHAR},
+      PARAM_NAME = #{paramName,jdbcType=CHAR},
+      STATE = #{state,jdbcType=CHAR}
+    where PARAM_CODE = #{paramCode,jdbcType=CHAR}
+  </update>
+</mapper>

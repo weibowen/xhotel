@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hotel.dao.InfoOrderHisMapper" >
+  <resultMap id="BaseResultMap" type="com.hotel.po.InfoOrderHis" >
+    <id column="order_no" property="orderNo" jdbcType="BIGINT" />
+    <result column="channel" property="channel" jdbcType="CHAR" />
+    <result column="cust_no" property="custNo" jdbcType="BIGINT" />
+    <result column="cust_name" property="custName" jdbcType="CHAR" />
+    <result column="mobile_number" property="mobileNumber" jdbcType="CHAR" />
+    <result column="cust_no2" property="custNo2" jdbcType="BIGINT" />
+    <result column="cust_name2" property="custName2" jdbcType="CHAR" />
+    <result column="cust_no3" property="custNo3" jdbcType="BIGINT" />
+    <result column="cust_name3" property="custName3" jdbcType="CHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="CHAR" />
+    <result column="room_type" property="roomType" jdbcType="CHAR" />
+    <result column="room_code" property="roomCode" jdbcType="CHAR" />
+    <result column="discount_price" property="discountPrice" jdbcType="REAL" />
+    <result column="pay_no" property="payNo" jdbcType="BIGINT" />
+    <result column="start_time" property="startTime" jdbcType="TIME" />
+    <result column="end_time" property="endTime" jdbcType="TIME" />
+    <result column="update_time" property="updateTime" jdbcType="TIME" />
+    <result column="oper_no" property="operNo" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_no, channel, cust_no, cust_name, mobile_number, cust_no2, cust_name2, cust_no3, 
+    cust_name3, order_status, room_type, room_code, discount_price, pay_no, start_time, 
+    end_time, update_time, oper_no
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hotel.po.InfoOrderHisExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from info_order_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from info_order_his
+    where order_no = #{orderNo,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from info_order_his
+    where order_no = #{orderNo,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hotel.po.InfoOrderHisExample" >
+    delete from info_order_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hotel.po.InfoOrderHis" >
+    insert into info_order_his (order_no, channel, cust_no, 
+      cust_name, mobile_number, cust_no2, 
+      cust_name2, cust_no3, cust_name3, 
+      order_status, room_type, room_code, 
+      discount_price, pay_no, start_time, 
+      end_time, update_time, oper_no)
+    values (#{orderNo,jdbcType=BIGINT}, #{channel,jdbcType=CHAR}, #{custNo,jdbcType=BIGINT}, 
+      #{custName,jdbcType=CHAR}, #{mobileNumber,jdbcType=CHAR}, #{custNo2,jdbcType=BIGINT}, 
+      #{custName2,jdbcType=CHAR}, #{custNo3,jdbcType=BIGINT}, #{custName3,jdbcType=CHAR}, 
+      #{orderStatus,jdbcType=CHAR}, #{roomType,jdbcType=CHAR}, #{roomCode,jdbcType=CHAR}, 
+      #{discountPrice,jdbcType=REAL}, #{payNo,jdbcType=BIGINT}, #{startTime,jdbcType=TIME}, 
+      #{endTime,jdbcType=TIME}, #{updateTime,jdbcType=TIME}, #{operNo,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hotel.po.InfoOrderHis" >
+    insert into info_order_his
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="custNo != null" >
+        cust_no,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="mobileNumber != null" >
+        mobile_number,
+      </if>
+      <if test="custNo2 != null" >
+        cust_no2,
+      </if>
+      <if test="custName2 != null" >
+        cust_name2,
+      </if>
+      <if test="custNo3 != null" >
+        cust_no3,
+      </if>
+      <if test="custName3 != null" >
+        cust_name3,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="roomType != null" >
+        room_type,
+      </if>
+      <if test="roomCode != null" >
+        room_code,
+      </if>
+      <if test="discountPrice != null" >
+        discount_price,
+      </if>
+      <if test="payNo != null" >
+        pay_no,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="operNo != null" >
+        oper_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=CHAR},
+      </if>
+      <if test="custNo != null" >
+        #{custNo,jdbcType=BIGINT},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=CHAR},
+      </if>
+      <if test="mobileNumber != null" >
+        #{mobileNumber,jdbcType=CHAR},
+      </if>
+      <if test="custNo2 != null" >
+        #{custNo2,jdbcType=BIGINT},
+      </if>
+      <if test="custName2 != null" >
+        #{custName2,jdbcType=CHAR},
+      </if>
+      <if test="custNo3 != null" >
+        #{custNo3,jdbcType=BIGINT},
+      </if>
+      <if test="custName3 != null" >
+        #{custName3,jdbcType=CHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="roomType != null" >
+        #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomCode != null" >
+        #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="discountPrice != null" >
+        #{discountPrice,jdbcType=REAL},
+      </if>
+      <if test="payNo != null" >
+        #{payNo,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIME},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIME},
+      </if>
+      <if test="operNo != null" >
+        #{operNo,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hotel.po.InfoOrderHisExample" resultType="java.lang.Integer" >
+    select count(*) from info_order_his
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update info_order_his
+    <set >
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.channel != null" >
+        channel = #{record.channel,jdbcType=CHAR},
+      </if>
+      <if test="record.custNo != null" >
+        cust_no = #{record.custNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.custName != null" >
+        cust_name = #{record.custName,jdbcType=CHAR},
+      </if>
+      <if test="record.mobileNumber != null" >
+        mobile_number = #{record.mobileNumber,jdbcType=CHAR},
+      </if>
+      <if test="record.custNo2 != null" >
+        cust_no2 = #{record.custNo2,jdbcType=BIGINT},
+      </if>
+      <if test="record.custName2 != null" >
+        cust_name2 = #{record.custName2,jdbcType=CHAR},
+      </if>
+      <if test="record.custNo3 != null" >
+        cust_no3 = #{record.custNo3,jdbcType=BIGINT},
+      </if>
+      <if test="record.custName3 != null" >
+        cust_name3 = #{record.custName3,jdbcType=CHAR},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.roomType != null" >
+        room_type = #{record.roomType,jdbcType=CHAR},
+      </if>
+      <if test="record.roomCode != null" >
+        room_code = #{record.roomCode,jdbcType=CHAR},
+      </if>
+      <if test="record.discountPrice != null" >
+        discount_price = #{record.discountPrice,jdbcType=REAL},
+      </if>
+      <if test="record.payNo != null" >
+        pay_no = #{record.payNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.startTime != null" >
+        start_time = #{record.startTime,jdbcType=TIME},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIME},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIME},
+      </if>
+      <if test="record.operNo != null" >
+        oper_no = #{record.operNo,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update info_order_his
+    set order_no = #{record.orderNo,jdbcType=BIGINT},
+      channel = #{record.channel,jdbcType=CHAR},
+      cust_no = #{record.custNo,jdbcType=BIGINT},
+      cust_name = #{record.custName,jdbcType=CHAR},
+      mobile_number = #{record.mobileNumber,jdbcType=CHAR},
+      cust_no2 = #{record.custNo2,jdbcType=BIGINT},
+      cust_name2 = #{record.custName2,jdbcType=CHAR},
+      cust_no3 = #{record.custNo3,jdbcType=BIGINT},
+      cust_name3 = #{record.custName3,jdbcType=CHAR},
+      order_status = #{record.orderStatus,jdbcType=CHAR},
+      room_type = #{record.roomType,jdbcType=CHAR},
+      room_code = #{record.roomCode,jdbcType=CHAR},
+      discount_price = #{record.discountPrice,jdbcType=REAL},
+      pay_no = #{record.payNo,jdbcType=BIGINT},
+      start_time = #{record.startTime,jdbcType=TIME},
+      end_time = #{record.endTime,jdbcType=TIME},
+      update_time = #{record.updateTime,jdbcType=TIME},
+      oper_no = #{record.operNo,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotel.po.InfoOrderHis" >
+    update info_order_his
+    <set >
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=CHAR},
+      </if>
+      <if test="custNo != null" >
+        cust_no = #{custNo,jdbcType=BIGINT},
+      </if>
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=CHAR},
+      </if>
+      <if test="mobileNumber != null" >
+        mobile_number = #{mobileNumber,jdbcType=CHAR},
+      </if>
+      <if test="custNo2 != null" >
+        cust_no2 = #{custNo2,jdbcType=BIGINT},
+      </if>
+      <if test="custName2 != null" >
+        cust_name2 = #{custName2,jdbcType=CHAR},
+      </if>
+      <if test="custNo3 != null" >
+        cust_no3 = #{custNo3,jdbcType=BIGINT},
+      </if>
+      <if test="custName3 != null" >
+        cust_name3 = #{custName3,jdbcType=CHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="roomType != null" >
+        room_type = #{roomType,jdbcType=CHAR},
+      </if>
+      <if test="roomCode != null" >
+        room_code = #{roomCode,jdbcType=CHAR},
+      </if>
+      <if test="discountPrice != null" >
+        discount_price = #{discountPrice,jdbcType=REAL},
+      </if>
+      <if test="payNo != null" >
+        pay_no = #{payNo,jdbcType=BIGINT},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIME},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIME},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIME},
+      </if>
+      <if test="operNo != null" >
+        oper_no = #{operNo,jdbcType=CHAR},
+      </if>
+    </set>
+    where order_no = #{orderNo,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hotel.po.InfoOrderHis" >
+    update info_order_his
+    set channel = #{channel,jdbcType=CHAR},
+      cust_no = #{custNo,jdbcType=BIGINT},
+      cust_name = #{custName,jdbcType=CHAR},
+      mobile_number = #{mobileNumber,jdbcType=CHAR},
+      cust_no2 = #{custNo2,jdbcType=BIGINT},
+      cust_name2 = #{custName2,jdbcType=CHAR},
+      cust_no3 = #{custNo3,jdbcType=BIGINT},
+      cust_name3 = #{custName3,jdbcType=CHAR},
+      order_status = #{orderStatus,jdbcType=CHAR},
+      room_type = #{roomType,jdbcType=CHAR},
+      room_code = #{roomCode,jdbcType=CHAR},
+      discount_price = #{discountPrice,jdbcType=REAL},
+      pay_no = #{payNo,jdbcType=BIGINT},
+      start_time = #{startTime,jdbcType=TIME},
+      end_time = #{endTime,jdbcType=TIME},
+      update_time = #{updateTime,jdbcType=TIME},
+      oper_no = #{operNo,jdbcType=CHAR}
+    where order_no = #{orderNo,jdbcType=BIGINT}
+  </update>
+</mapper>

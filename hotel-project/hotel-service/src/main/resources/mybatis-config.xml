@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- <mappers>
+		<mapper resource="mapper/TdSNodeMapper.xml" />
+		<mapper resource="mapper/TfFStaffMapper.xml" />
+		<mapper resource="mapper/TdSParamMapper.xml" />
+		<mapper resource="mapper/CodeMenuMapper.xml" />
+		<mapper resource="mapper/CodeRoleMapper.xml" />
+		<mapper resource="mapper/InfoStaffMapper.xml" />
+		<mapper resource="mapper/LogLoginMapper.xml" />
+		<mapper resource="mapper/RuleRoleMenuMapper.xml" />
+		<mapper resource="mapper/RuleStaffRoleMapper.xml" />
+		<mapper resource="mapper/TdSParamMapper.xml" />
+	</mappers> -->
+</configuration>
